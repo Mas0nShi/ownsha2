@@ -1,34 +1,30 @@
+    default rel
+    global _start
+    
+    section .text progbits alloc exec write
+    extern _GLOBAL_OFFSET_TABLE_                            ; byte
 
-default rel
-
-
-global    _start
-
-section   .text progbits alloc exec write
-
-extern _GLOBAL_OFFSET_TABLE_                            ; byte
-
-_start:
+    _start:
 		; padding 4 bytes
 		nop
 		nop
-		nop 
 		nop
-		
+		nop
+
 		; padding 2 bytes
 		nop
 		nop
-		
+
 		; use 8 bytes
 		mov     byte [abs 400050AH], -128
-		
+
         mov     rax, qword 0BB67AE856A09E667H
         mov     r15d, 67108864
         ;sub     rsp, 152
         mov     qword [rsp+30H], rax
         mov     rax, qword 0A54FF53A3C6EF372H
         mov     qword [rsp+38H], rax
-        mov     rax, qword 9B05688C510E527FH            
+        mov     rax, qword 9B05688C510E527FH
         mov     qword [rsp+40H], rax
         mov     rax, qword 5BE0CD191F83D9ABH
         mov     qword [rsp+48H], rax
@@ -111,7 +107,7 @@ _start:
         jmp     ?_002                                   ; 0154 _ E9, FFFFFF5F
 
 
-?_003:  ; Local function
+?_003:
         lea     rbx, [rel K256]                         ; 0159 _ 48: 8D. 1D, 00000209(rel)
         mov     dword [rsp+4H], 16                      ; 0160 _ C7. 44 24, 04, 00000010
         add     r15, 64                                 ; 0168 _ 49: 83. C7, 40
@@ -195,7 +191,7 @@ _start:
         mov     r8d, r12d                               ; 0271 _ 45: 89. E0
         jmp     ?_004                                   ; 0274 _ E9, FFFFFEF8
 
-?_005:  ; Local function
+    ?_005:  ; Local function
         add     dword [rsp+0CH], r12d                   ; 0279 _ 44: 01. 64 24, 0C
         mov     esi, dword [rsp+1CH]                    ; 027E _ 8B. 74 24, 1C
         mov     ebx, dword [rsp+18H]                    ; 0282 _ 8B. 5C 24, 18
@@ -216,60 +212,60 @@ _start:
         mov     dword [rsp+24H], r12d                   ; 02BB _ 44: 89. 64 24, 24
         jmp     ?_001                                   ; 02C0 _ E9, FFFFFDDF
 
-?_006:  ; Local function
-        mov     eax, dword [rsp+10H]                    ; 02C5 _ 8B. 44 24, 10
-        mov     dword [rsp+38H], esi                    ; 02C9 _ 89. 74 24, 38
-        mov     dword [rsp+3CH], ebx                    ; 02CD _ 89. 5C 24, 3C
-        mov     dword [rsp+30H], eax                    ; 02D1 _ 89. 44 24, 30
-        mov     eax, dword [rsp+8H]                     ; 02D5 _ 8B. 44 24, 08
-        mov     dword [rsp+48H], edi                    ; 02D9 _ 89. 7C 24, 48
-        mov     dword [rsp+34H], eax                    ; 02DD _ 89. 44 24, 34
-        mov     eax, dword [rsp+0CH]                    ; 02E1 _ 8B. 44 24, 0C
-        mov     dword [rsp+4CH], r12d                   ; 02E5 _ 44: 89. 64 24, 4C
-        lea     r12, [rsp+50H]                          ; 02EA _ 4C: 8D. 64 24, 50
-        mov     dword [rsp+40H], eax                    ; 02EF _ 89. 44 24, 40
-        mov     eax, dword [rsp+14H]                    ; 02F3 _ 8B. 44 24, 14
-        mov     dword [rsp+44H], eax                    ; 02F7 _ 89. 44 24, 44
-        lea     rax, [rsp+30H]                          ; 02FB _ 48: 8D. 44 24, 30
-?_007:  mov     edx, dword [rax]                        ; 0300 _ 8B. 10
-        add     rax, 4                                  ; 0302 _ 48: 83. C0, 04
-        bswap   edx                                     ; 0306 _ 0F CA
-        mov     dword [rax-4H], edx                     ; 0308 _ 89. 50, FC
-        cmp     r12, rax                                ; 030B _ 49: 39. C4
-        jnz     ?_007                                   ; 030E _ 75, F0
-        xor     ebx, ebx                                ; 0310 _ 31. DB
-        mov     ebp, 1                                  ; 0312 _ BD, 00000001
-?_008:  mov     eax, ebx                                ; 0317 _ 89. D8
-        mov     edx, ebx                                ; 0319 _ 89. DA
-        mov     ecx, ebp                                ; 031B _ 89. E9
-        sar     al, 1                                   ; 031D _ D0. F8
-        and     edx, 01H                                ; 031F _ 83. E2, 01
-        movsx   rax, al                                 ; 0322 _ 48: 0F BE. C0
-        sub     ecx, edx                                ; 0326 _ 29. D1
-        movzx   eax, byte [rsp+rax+30H]                 ; 0328 _ 0F B6. 44 04, 30
-        shl     ecx, 2                                  ; 032D _ C1. E1, 02
-        sar     eax, cl                                 ; 0330 _ D3. F8
-        and     eax, 0FH                                ; 0332 _ 83. E0, 0F
-        lea     edx, [rax+30H]                          ; 0335 _ 8D. 50, 30
-        cmp     al, 9                                   ; 0338 _ 3C, 09
-        jle     ?_009                                   ; 033A _ 7E, 03
-        lea     edx, [rax+57H]                          ; 033C _ 8D. 50, 57
-?_009:  mov     byte [rsp+50H], dl                      ; 033F _ 88. 54 24, 50
-        mov     rsi, r12                                ; 0343 _ 4C: 89. E6
-        mov     edx, 1                                  ; 0346 _ BA, 00000001
-        inc     ebx                                     ; 034B _ FF. C3
-        mov     edi, 1                                  ; 034D _ BF, 00000001
-        
-		mov eax, 1
-		syscall
-	
-        cmp     bl, 64                                  ; 0357 _ 80. FB, 40
-        jnz     ?_008                                   ; 035A _ 75, BB
-        ;add     rsp, 152                                ; 035C _ 48: 81. C4, 00000098
-        mov     eax, 60                                 ; 0363 _ B8, 0000003C
-		
-		xor     rdi, rdi                
-        syscall
-		
-K256:   ; Local function
-db 98H, 2FH, 8AH, 42H, 91H, 44H, 37H, 71H, 0CFH, 0FBH, 0C0H, 0B5H, 0A5H, 0DBH, 0B5H, 0E9H, 5BH, 0C2H, 56H, 39H, 0F1H, 11H, 0F1H, 59H, 0A4H, 82H, 3FH, 92H, 0D5H, 5EH, 1CH, 0ABH, 98H, 0AAH, 07H, 0D8H, 01H, 5BH, 83H, 12H, 0BEH, 85H, 31H, 24H, 0C3H, 7DH, 0CH, 55H, 74H, 5DH, 0BEH, 72H, 0FEH, 0B1H, 0DEH, 80H, 0A7H, 06H, 0DCH, 9BH, 74H, 0F1H, 9BH, 0C1H, 0C1H, 69H, 9BH, 0E4H, 86H, 47H, 0BEH, 0EFH, 0C6H, 9DH, 0C1H, 0FH, 0CCH, 0A1H, 0CH, 24H, 6FH, 2CH, 0E9H, 2DH, 0AAH, 84H, 74H, 4AH, 0DCH, 0A9H, 0B0H, 5CH, 0DAH, 88H, 0F9H, 76H, 52H, 51H, 3EH, 98H, 6DH, 0C6H, 31H, 0A8H, 0C8H, 27H, 03H, 0B0H, 0C7H, 7FH, 59H, 0BFH, 0F3H, 0BH, 0E0H, 0C6H, 47H, 91H, 0A7H, 0D5H, 51H, 63H, 0CAH, 06H, 67H, 29H, 29H, 14H, 85H, 0AH, 0B7H, 27H, 38H, 21H, 1BH, 2EH, 0FCH, 6DH, 2CH, 4DH, 13H, 0DH, 38H, 53H, 54H, 73H, 0AH, 65H, 0BBH, 0AH, 6AH, 76H, 2EH, 0C9H, 0C2H, 81H, 85H, 2CH, 72H, 92H, 0A1H, 0E8H, 0BFH, 0A2H, 4BH, 66H, 1AH, 0A8H, 70H, 8BH, 4BH, 0C2H, 0A3H, 51H, 6CH, 0C7H, 19H, 0E8H, 92H, 0D1H, 24H, 06H, 99H, 0D6H, 85H, 35H, 0EH, 0F4H, 70H, 0A0H, 6AH, 10H, 16H, 0C1H, 0A4H, 19H, 08H, 6CH, 37H, 1EH, 4CH, 77H, 48H, 27H, 0B5H, 0BCH, 0B0H, 34H, 0B3H, 0CH, 1CH, 39H, 4AH, 0AAH, 0D8H, 4EH, 4FH, 0CAH, 9CH, 5BH, 0F3H, 6FH, 2EH, 68H, 0EEH, 82H, 8FH, 74H, 6FH, 63H, 0A5H, 78H, 14H, 78H, 0C8H, 84H, 08H, 02H, 0C7H, 8CH, 0FAH, 0FFH, 0BEH, 90H, 0EBH, 6CH, 50H, 0A4H, 0F7H, 0A3H, 0F9H, 0BEH, 0F2H, 78H, 71H, 0C6H 
+    ?_006:  ; Local function
+            mov     eax, dword [rsp+10H]                    ; 02C5 _ 8B. 44 24, 10
+            mov     dword [rsp+38H], esi                    ; 02C9 _ 89. 74 24, 38
+            mov     dword [rsp+3CH], ebx                    ; 02CD _ 89. 5C 24, 3C
+            mov     dword [rsp+30H], eax                    ; 02D1 _ 89. 44 24, 30
+            mov     eax, dword [rsp+8H]                     ; 02D5 _ 8B. 44 24, 08
+            mov     dword [rsp+48H], edi                    ; 02D9 _ 89. 7C 24, 48
+            mov     dword [rsp+34H], eax                    ; 02DD _ 89. 44 24, 34
+            mov     eax, dword [rsp+0CH]                    ; 02E1 _ 8B. 44 24, 0C
+            mov     dword [rsp+4CH], r12d                   ; 02E5 _ 44: 89. 64 24, 4C
+            lea     r12, [rsp+50H]                          ; 02EA _ 4C: 8D. 64 24, 50
+            mov     dword [rsp+40H], eax                    ; 02EF _ 89. 44 24, 40
+            mov     eax, dword [rsp+14H]                    ; 02F3 _ 8B. 44 24, 14
+            mov     dword [rsp+44H], eax                    ; 02F7 _ 89. 44 24, 44
+            lea     rax, [rsp+30H]                          ; 02FB _ 48: 8D. 44 24, 30
+    ?_007:  mov     edx, dword [rax]                        ; 0300 _ 8B. 10
+            add     rax, 4                                  ; 0302 _ 48: 83. C0, 04
+            bswap   edx                                     ; 0306 _ 0F CA
+            mov     dword [rax-4H], edx                     ; 0308 _ 89. 50, FC
+            cmp     r12, rax                                ; 030B _ 49: 39. C4
+            jnz     ?_007                                   ; 030E _ 75, F0
+            xor     ebx, ebx                                ; 0310 _ 31. DB
+            mov     ebp, 1                                  ; 0312 _ BD, 00000001
+    ?_008:  mov     eax, ebx                                ; 0317 _ 89. D8
+            mov     edx, ebx                                ; 0319 _ 89. DA
+            mov     ecx, ebp                                ; 031B _ 89. E9
+            sar     al, 1                                   ; 031D _ D0. F8
+            and     edx, 01H                                ; 031F _ 83. E2, 01
+            movsx   rax, al                                 ; 0322 _ 48: 0F BE. C0
+            sub     ecx, edx                                ; 0326 _ 29. D1
+            movzx   eax, byte [rsp+rax+30H]                 ; 0328 _ 0F B6. 44 04, 30
+            shl     ecx, 2                                  ; 032D _ C1. E1, 02
+            sar     eax, cl                                 ; 0330 _ D3. F8
+            and     eax, 0FH                                ; 0332 _ 83. E0, 0F
+            lea     edx, [rax+30H]                          ; 0335 _ 8D. 50, 30
+            cmp     al, 9                                   ; 0338 _ 3C, 09
+            jle     ?_009                                   ; 033A _ 7E, 03
+            lea     edx, [rax+57H]                          ; 033C _ 8D. 50, 57
+    ?_009:  mov     byte [rsp+50H], dl                      ; 033F _ 88. 54 24, 50
+            mov     rsi, r12                                ; 0343 _ 4C: 89. E6
+            mov     edx, 1                                  ; 0346 _ BA, 00000001
+            inc     ebx                                     ; 034B _ FF. C3
+            mov     edi, 1                                  ; 034D _ BF, 00000001
+
+            mov eax, 1
+            syscall
+
+            cmp     bl, 64                                  ; 0357 _ 80. FB, 40
+            jnz     ?_008                                   ; 035A _ 75, BB
+            ;add     rsp, 152                                ; 035C _ 48: 81. C4, 00000098
+            mov     eax, 60                                 ; 0363 _ B8, 0000003C
+
+            xor     rdi, rdi
+            syscall
+
+K256:
+    db 98H, 2FH, 8AH, 42H, 91H, 44H, 37H, 71H, 0CFH, 0FBH, 0C0H, 0B5H, 0A5H, 0DBH, 0B5H, 0E9H, 5BH, 0C2H, 56H, 39H, 0F1H, 11H, 0F1H, 59H, 0A4H, 82H, 3FH, 92H, 0D5H, 5EH, 1CH, 0ABH, 98H, 0AAH, 07H, 0D8H, 01H, 5BH, 83H, 12H, 0BEH, 85H, 31H, 24H, 0C3H, 7DH, 0CH, 55H, 74H, 5DH, 0BEH, 72H, 0FEH, 0B1H, 0DEH, 80H, 0A7H, 06H, 0DCH, 9BH, 74H, 0F1H, 9BH, 0C1H, 0C1H, 69H, 9BH, 0E4H, 86H, 47H, 0BEH, 0EFH, 0C6H, 9DH, 0C1H, 0FH, 0CCH, 0A1H, 0CH, 24H, 6FH, 2CH, 0E9H, 2DH, 0AAH, 84H, 74H, 4AH, 0DCH, 0A9H, 0B0H, 5CH, 0DAH, 88H, 0F9H, 76H, 52H, 51H, 3EH, 98H, 6DH, 0C6H, 31H, 0A8H, 0C8H, 27H, 03H, 0B0H, 0C7H, 7FH, 59H, 0BFH, 0F3H, 0BH, 0E0H, 0C6H, 47H, 91H, 0A7H, 0D5H, 51H, 63H, 0CAH, 06H, 67H, 29H, 29H, 14H, 85H, 0AH, 0B7H, 27H, 38H, 21H, 1BH, 2EH, 0FCH, 6DH, 2CH, 4DH, 13H, 0DH, 38H, 53H, 54H, 73H, 0AH, 65H, 0BBH, 0AH, 6AH, 76H, 2EH, 0C9H, 0C2H, 81H, 85H, 2CH, 72H, 92H, 0A1H, 0E8H, 0BFH, 0A2H, 4BH, 66H, 1AH, 0A8H, 70H, 8BH, 4BH, 0C2H, 0A3H, 51H, 6CH, 0C7H, 19H, 0E8H, 92H, 0D1H, 24H, 06H, 99H, 0D6H, 85H, 35H, 0EH, 0F4H, 70H, 0A0H, 6AH, 10H, 16H, 0C1H, 0A4H, 19H, 08H, 6CH, 37H, 1EH, 4CH, 77H, 48H, 27H, 0B5H, 0BCH, 0B0H, 34H, 0B3H, 0CH, 1CH, 39H, 4AH, 0AAH, 0D8H, 4EH, 4FH, 0CAH, 9CH, 5BH, 0F3H, 6FH, 2EH, 68H, 0EEH, 82H, 8FH, 74H, 6FH, 63H, 0A5H, 78H, 14H, 78H, 0C8H, 84H, 08H, 02H, 0C7H, 8CH, 0FAH, 0FFH, 0BEH, 90H, 0EBH, 6CH, 50H, 0A4H, 0F7H, 0A3H, 0F9H, 0BEH, 0F2H, 78H, 71H, 0C6H

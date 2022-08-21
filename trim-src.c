@@ -8,7 +8,6 @@
 
 
 int main(int argc, char *argv[]) {
-
     size_t size = sizeof(foo);
 
     for (int i = 8; i < 16; ++i) {
@@ -54,26 +53,26 @@ int main(int argc, char *argv[]) {
     memcpy(&foo.ehdr.e_shoff, &foo.text[0], 8);
     ((char *) (&foo.ehdr.e_shoff))[8] = 0xEB;
     ((char *) (&foo.ehdr.e_shoff))[9] = offsetof(elf, text) -
-                                         (offsetof(elf, ehdr) + offsetof(Elf64_Ehdr, e_shoff) + 10);
+                                        (offsetof(elf, ehdr) + offsetof(Elf64_Ehdr, e_shoff) + 10);
     printf("jmp %d\n", ((char *) (&foo.ehdr.e_shoff))[9]);
-	
+
     for (int i = 0; i < sizeof(foo.text) - 8; ++i) {
         foo.text[i] = foo.text[i + 8];
     }
     size -= 8;
-	printf("size: %d\n", size);
+    printf("size: %d\n", size);
 
 
     // output
-	
+
     FILE *fd = fopen("zminsha256", "wb");
-	printf("fd: %p\n", fd);
-	printf("Error: %s\n", strerror(errno));
-	
-	
+    printf("fd: %p\n", fd);
+    printf("Error: %s\n", strerror(errno));
+
+
     size_t n = fwrite(&foo, size, 1, fd);
-	
-	fclose(fd);
+
+    fclose(fd);
     printf("done: %d %d\n", size, n);
     return 0;
 }
