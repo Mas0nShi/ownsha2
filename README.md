@@ -15,6 +15,13 @@ clear
 make clean
 ```
 
+## Feature
+- only syscall
+- minimalist file
+- no share libary
+
+
+final size: `1290`
 
 ## Reference
 
