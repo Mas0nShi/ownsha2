@@ -26,3 +26,7 @@ final size: `1290` bytes
 ## Reference
 
 https://github.com/fengjixuchui/selfmd5
+
+## Thanks
+
+[@PandaOS](https://github.com/P4nda0s)
