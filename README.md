@@ -21,7 +21,7 @@ make clean
 - no share libary
 
 
-final size: `1290`
+final size: `1290` bytes
 
 ## Reference
 
