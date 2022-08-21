@@ -16,7 +16,7 @@ make clean
 ```
 
 ## Feature
-- only syscall
+- syscall
 - minimalist file
 - no share libary
 
