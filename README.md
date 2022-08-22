@@ -18,7 +18,7 @@ make clean
 ## Feature
 - syscall
 - minimum ELF
-- no shared libaries
+- no shared libraries
 
 
 final size: `1290` bytes
