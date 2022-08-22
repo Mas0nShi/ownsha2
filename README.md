@@ -1,7 +1,7 @@
 # ownsha2
 minimum ELF64 program to calculate its own SHA256.
 
-## Usage
+## Usage 
 
 compile
 ```shell
@@ -17,8 +17,8 @@ make clean
 
 ## Feature
 - syscall
-- minimalist file
-- no share libary
+- minimum ELF
+- no shared libaries
 
 
 final size: `1290` bytes
